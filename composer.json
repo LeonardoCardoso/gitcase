@@ -1,0 +1,23 @@
+{
+  "name": "leonardocardoso/gitcase",
+  "description": "Share your complete GitHub contribution graph",
+  "license": "APACHE 2.0",
+  "authors": [
+    {
+      "name": "Leonardo Cardoso",
+      "email": "leo@leocardz.com",
+      "homepage": "http://gitcase.leocardz.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LeonardoCardoso/gitcase.git"
+  },
+  "keywords": [
+    "github",
+    "git",
+    "graph"
+  ],
+  "require": {
+  }
+}

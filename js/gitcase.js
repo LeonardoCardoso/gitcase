@@ -6,17 +6,25 @@
 
     $.fn.gitcase = function (options) {
 
-        $(this).click(function () {
-            $.post("oauth", {}, function (data) {
-                console.log(data);
-            }).done(function () {
-                console.log("got");
-            }).fail(function () {
-                console.log("error");
-            }).always(function () {
-                console.log("finished");
+        var defaults = {
+            action: ""
+        };
+
+        var opts = jQuery.extend(defaults, options);
+
+        if (opts.action === "request") {
+            $(this).click(function () {
+                $.get('github/request.php', {}, function (res) {
+                    window.location = res.url;
+                }, "json");
             });
-        });
+        } else if (opts.action === "generate") {
+            $(this).click(function () {
+                $.get('github/generate.php', {}, function (res) {
+                    console.log(res);
+                }, "json");
+            });
+        }
 
     };
 
