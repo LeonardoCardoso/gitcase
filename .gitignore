@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+*npm-debug*
+node_modules/*
+doc/*
+lib/*
