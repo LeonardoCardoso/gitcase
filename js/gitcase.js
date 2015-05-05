@@ -9,7 +9,7 @@
         var allRepos = [];
         var page = 1;
         var currentRepoNumber = 0;
-        var itemsPerPage = 30;
+        var itemsPerPage = 100;
 
         var defaults = {
             action: ''

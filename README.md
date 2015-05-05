@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
 
+Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
+
 Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that problem we've created this.
 
 It's PHPs based project shares the information of all contributions (private and public) as you seen when you are logged in your GitHub profile.
