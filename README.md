@@ -4,7 +4,7 @@
 
 Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that problem we've created this.
 
-It's Node.js + AngularJS based project shares the information of all contributions (private and public) as you seen when you are logged in your GitHub profile.
+It's PHPs based project shares the information of all contributions (private and public) as you seen when you are logged in your GitHub profile.
 
 ## As seen publicly
 
@@ -21,6 +21,19 @@ This API only shows the info, not the data.
 ## Live Example
 
 You can found it here http://gitcase.leocardz.com
+
+## Important
+
+Create a file in the folder statics named credentials.php and add the following:
+
+
+    <?php
+    $clientID = YOUR CLIENT ID;
+    $clientSecret = YOUR CLIENT SECRET;
+    $callbackURL = CALLBACK URL YOU REGISTERED YOUR APPLICATION ON GITHUB;
+
+
+Make sure the library php5-curl is installed and enabled on the server whether local or at webspace. 
 
 ## License
 

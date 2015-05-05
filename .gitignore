@@ -1,6 +1,6 @@
 .idea
 .DS_Store
-*npm-debug*
-node_modules/*
-doc/*
-lib/*
+composer.phar
+composer.lock
+vendor/*
+statics/credentials.php
