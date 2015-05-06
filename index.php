@@ -129,7 +129,7 @@ if (!isset($_COOKIE[$access_token])) {
                    data-size="large">Follow @theleocardz</a>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gitcase.leocardz.com/"
                    data-text="Share your complete GitHub contribution graph" data-via="theleocardz" data-size="large"
-                   data-hashtags="gitcase">Tweet</a>
+                   data-hashtags="gitcase,git,github">Tweet</a>
                 <script>!function (d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
                         if (!d.getElementById(id)) {

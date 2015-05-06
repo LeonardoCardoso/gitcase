@@ -69,22 +69,7 @@ $textbox->draw("Contributions");
 $textbox->setBox($width - 120, 5, 105, 100);
 $textbox->draw("gitcase.leocardz.com");
 
-// bottom box texts
-$textbox = new Box($im);
-$textbox->setFontSize(20);
-$textbox->setFontFace($font);
-$textbox->setFontColor($gdDarkerGrey);
 $textbox->setTextAlign('left', 'top');
-
-$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset, 200, 0);
-$textbox->draw("In the last year");
-
-$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset, 200, 0);
-$textbox->draw("Longest streak");
-
-$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset, 200, 0);
-$textbox->draw("Current streak");
-
 // summary text
 $textbox->setFontSize(17);
 $textbox->setBox(10, $divisor_height_offset - 30, 400, 0);
@@ -166,20 +151,73 @@ $textbox->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_of
 $textbox->draw("F");
 
 
+// bottom box texts
 $textbox = new Box($im);
-$textbox->setFontSize(30);
+$textbox->setFontSize(20);
+$textbox->setFontFace($font);
+$textbox->setFontColor($gdDarkerGrey);
+$textbox->setTextAlign('center', 'top');
+
+$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textbox->draw("In the last year");
+
+$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textbox->draw("Longest streak");
+
+$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textbox->draw("Current streak");
+
+
+$textbox->setFontSize(15);
+$textbox->setBox(0, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
+
+$textbox->setBox($divisor_width_offset * 3, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+// if are in the same year then do not show the year
+$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
+
+$textbox->setBox($divisor_width_offset * 6, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+// if are in the same year then do not show the year
+$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
+
+
+// streaks
+$textbox = new Box($im);
+$textbox->setFontSize(50);
 $textbox->setFontFace($font);
 $textbox->setFontColor($gdBlack);
-$textbox->setTextAlign('left', 'top');
-$textbox->setBox($width / 3 - 205, $height - 60, 200, 0);
-$textbox->draw("729 total");
+$textbox->setTextAlign('center', 'center');
+
+$number = 122222;
+$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textbox->draw(number_format($number));
+
+$longest_streak = 16;
+$textbox->setBox($divisor_width_offset  * 4, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textbox->draw($longest_streak);
+
+$longest_streak = 16;
+$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textbox->draw($longest_streak);
+
+$textbox->setFontSize(20);
+$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textbox->draw("total");
+
+$longest_streak = 16;
+$textbox->setBox($divisor_width_offset  * 4, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textbox->draw("days");
+
+$longest_streak = 16;
+$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textbox->draw("days");
 
 
 ob_start();
-imagejpeg($im);
+imagepng($im);
 $contents = ob_get_contents();
 ob_end_clean();
 
-echo "data:image/jpeg;base64," . base64_encode($contents);
+echo "data:image/png;base64," . base64_encode($contents);
 
 imagedestroy($im);
