@@ -7,6 +7,16 @@ body {
     height: 100px;
 }
 
-#octal, #finalResult, #share {
+#octal, #finalResult, #share, #download {
     display: none;
+}
+
+.btn-primary {
+    margin-top: 5px;
+}
+
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100em
 }

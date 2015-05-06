@@ -27,6 +27,7 @@ include("statics/cookies.php");
     <script src="js/gitcase.js"></script>
     <script>
         $(document).ready(function () {
+            $("#download").gitcase({action: "download"});
             $("#oauth").gitcase({action: "request"});
             $("#generate").gitcase({action: "generate"});
         });
@@ -82,6 +83,10 @@ if (!isset($_COOKIE[$access_token])) {
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-12">
+                    <a class="btn btn-lg btn-primary" id="download">
+                        download&nbsp;<i class="fa hub fa-fw fa-download"><br></i>
+                    </a>
+
                     <a class="btn btn-lg btn-primary" id="share">
                         share&nbsp;<i class="fa hub fa-fw fa-bullhorn"><br></i>
                     </a>
@@ -102,12 +107,12 @@ if (!isset($_COOKIE[$access_token])) {
 }
 ?>
 
+<img id="finalResult" class="center img-responsive">
 <div class="section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <img src="images/octocat-spinner-smil.min.svg" id="octal" class="center-block img-responsive">
-                <img id="finalResult" class="center-block img-responsive">
             </div>
         </div>
     </div>

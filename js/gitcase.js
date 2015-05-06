@@ -17,7 +17,13 @@
 
         var opts = jQuery.extend(defaults, options);
 
-        if (opts.action === 'request') {
+        if (opts.action === 'download') {
+            $(this).click(function () {
+                $.post('github/save.php', {'file': $('#finalResult').attr('src')}, function (res) {
+                    window.location = "github/download.php?file=" + res.name;
+                }, 'json');
+            });
+        } else if (opts.action === 'request') {
             $(this).click(function () {
                 $.get('github/request.php', {'type': 'authorize'}, function (res) {
                     window.location = res.url;
@@ -29,8 +35,9 @@
                     $('#generate').addClass('disabled');
                     $('#octal').css({'display': 'block'});
                     $('#share').css({'display': 'none'});
+                    $('#download').css({'display': 'none'});
 
-                    var finalResult = $("#finalResult");
+                    var finalResult = $('#finalResult');
                     finalResult.css({'display': 'none'});
                     finalResult.attr('src', '');
 
@@ -75,6 +82,7 @@
                     $('#generate').removeClass('disabled');
                     $('#octal').css({'display': 'none'});
                     $('#share').css({'display': 'inline-block'});
+                    $('#download').css({'display': 'inline-block'});
 
                     for (i = 0; i < allRepos.length; i++) {
                         console.log(allRepos[i]);
@@ -83,7 +91,7 @@
                     $.get('github/image.php', {
                         'reposAmount': allRepos.length
                     }, function (image) {
-                        var finalResult = $("#finalResult");
+                        var finalResult = $('#finalResult');
                         finalResult.attr('src', image);
                         finalResult.css({'display': 'block'});
                     });
