@@ -26,7 +26,14 @@
         } else if (opts.action === 'generate') {
             $(this).click(function () {
 
-                    $(this).attr('disabled', 'disabled');
+                    $('#generate').addClass('disabled');
+                    $('#octal').css({'display': 'block'});
+                    $('#share').css({'display': 'none'});
+
+                    var finalResult = $("#finalResult");
+                    finalResult.css({'display': 'none'});
+                    finalResult.attr('src', '');
+
                     allRepos = [];
                     page = 1;
                     currentRepoNumber = 0;
@@ -65,11 +72,22 @@
                     getPage(btn, res, totalAmount, allRepos);
                 } else {
 
-                    btn.removeAttr('disabled');
+                    $('#generate').removeClass('disabled');
+                    $('#octal').css({'display': 'none'});
+                    $('#share').css({'display': 'inline-block'});
 
                     for (i = 0; i < allRepos.length; i++) {
                         console.log(allRepos[i]);
                     }
+
+                    $.get('github/image.php', {
+                        'reposAmount': allRepos.length
+                    }, function (image) {
+                        var finalResult = $("#finalResult");
+                        finalResult.attr('src', image);
+                        finalResult.css({'display': 'block'});
+                    });
+
                 }
 
             }, 'json');

@@ -19,5 +19,6 @@
     "graph"
   ],
   "require": {
+    "stil/gd-text": "*"
   }
 }

@@ -28,7 +28,7 @@ include("statics/cookies.php");
     <script>
         $(document).ready(function () {
             $("#oauth").gitcase({action: "request"});
-            $("#graph").gitcase({action: "generate"});
+            $("#generate").gitcase({action: "generate"});
         });
     </script>
     <title></title>
@@ -59,17 +59,6 @@ include("statics/cookies.php");
     </div>
 </div>
 
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <img src="images/octocat-spinner-smil.min.svg" id="octal" class="center-block img-responsive">
-                <img id="finalResult" class="center-block img-responsive">
-            </div>
-        </div>
-    </div>
-</div>
-
 <?php
 if (!isset($_COOKIE[$access_token])) {
     ?>
@@ -93,6 +82,10 @@ if (!isset($_COOKIE[$access_token])) {
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-12">
+                    <a class="btn btn-lg btn-primary" id="share">
+                        share&nbsp;<i class="fa hub fa-fw fa-bullhorn"><br></i>
+                    </a>
+
                     <a class="btn btn-lg btn-primary" id="generate">
                         generate&nbsp;<i class="fa hub fa-fw fa-bar-chart"><br></i>
                     </a>
@@ -108,15 +101,18 @@ if (!isset($_COOKIE[$access_token])) {
 <?php
 }
 ?>
-<div class="section" id="shareSection">
-    <div class="container text-center">
+
+<div class="section">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-lg btn-primary" id="share">share&nbsp;<i class="fa hub fa-fw fa-bullhorn"><br></i></a>
+                <img src="images/octocat-spinner-smil.min.svg" id="octal" class="center-block img-responsive">
+                <img id="finalResult" class="center-block img-responsive">
             </div>
         </div>
     </div>
 </div>
+
 <div class="section">
     <div class="container">
         <div class="row">

@@ -7,6 +7,6 @@ body {
     height: 100px;
 }
 
-#octal, #finalResult, #shareSection {
+#octal, #finalResult, #share {
     display: none;
 }
