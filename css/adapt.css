@@ -1,0 +1,12 @@
+body {
+    background: #f5f5f5;
+}
+
+#octal {
+    width: 100px;
+    height: 100px;
+}
+
+#octal, #finalResult, #share {
+    display: none;
+}

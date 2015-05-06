@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
 
-Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that problem we've created this.
+Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
+
+Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that issue we've created this.
 
 It's PHPs based project shares the information of all contributions (private and public) as you seen when you are logged in your GitHub profile.
 
@@ -34,6 +36,19 @@ Create a file in the folder statics named credentials.php and add the following:
 
 
 Make sure the library php5-curl is installed and enabled on the server whether local or at webspace. 
+
+## Autoload
+
+To install dependencies via [Composer](http://getcomposer.org), do the following:
+
+```bash
+$ curl -s http://getcomposer.org/installer | php
+```
+
+```bash
+$ php composer.phar install
+```
+
 
 ## License
 

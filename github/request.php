@@ -7,5 +7,10 @@
  */
 
 include("../statics/urls.php");
+include("../statics/cookies.php");
 
-echo json_encode(array("url" => $authorize_url));
+if ($_GET["type"] === "authorize") {
+    echo json_encode(array("url" => $authorize_url));
+} else if ($_GET["type"] === "user") {
+    echo json_encode(array("url" => $user, "repos_url" => $repos, "access_token" => $_COOKIE[$access_token]));
+}
