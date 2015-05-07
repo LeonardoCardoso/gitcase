@@ -11,6 +11,8 @@ include("../statics/cookies.php");
 
 if ($_GET["type"] === "authorize") {
     echo json_encode(array("url" => $authorize_url));
+} else if ($_GET["type"] === "issues") {
+    echo json_encode(array("url" => $issues));
 } else if ($_GET["type"] === "user") {
-    echo json_encode(array("url" => $user, "repos_url" => $repos, "access_token" => $_COOKIE[$access_token]));
+    echo json_encode(array("url" => $user, "repos_url" => $repos));
 }
