@@ -15,6 +15,7 @@
         var currentRepoNumber = 0;
         var itemsPerPage = 100;
         var startDate = new Date();
+        startDate = new Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDay());
 
 
         var defaults = {
@@ -76,7 +77,9 @@
 
         function buildDatesArray() {
             var now = new Date();
+            now = new Date.UTC(now.getFullYear(), now.getMonth(), now.getDay());
             startDate = new Date();
+            startDate = new Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDay());
             startDate.setFullYear(startDate.getFullYear() - 1);
             startDate.setDate(startDate.getDate() - 1);
             var nowString = removeMS(now);
@@ -181,7 +184,7 @@
             dateString = dateString.substring(0, dateString.indexOf('T'));
             datesArray[dateString]++;
 
-            if(maxCommit < datesArray[dateString]){
+            if (maxCommit < datesArray[dateString]) {
                 maxCommit = datesArray[dateString];
             }
         }
