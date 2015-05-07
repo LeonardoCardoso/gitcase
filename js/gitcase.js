@@ -61,7 +61,7 @@
 
                     $.get('github/request.php', {'type': 'user'}, function (res) {
 
-                        $.get(res.url, {'access_token': res.access_token}, function (user) {
+                        $.get(res.url, {'access_token': Cookies.get('access_token')}, function (user) {
 
                             var totalRepos = parseInt(user.public_repos) + parseInt(user.total_private_repos);
 
@@ -78,7 +78,7 @@
 
         function getPage(btn, user, res, totalAmount, allRepos) {
             $.get(res.repos_url, {
-                'access_token': res.access_token,
+                'access_token': Cookies.get('access_token'),
                 'page': page,
                 'per_page': itemsPerPage
             }, function (repos) {
@@ -109,7 +109,7 @@
 
 
                 var url = allRepos[i].commits_url.substring(0, allRepos[i].commits_url.indexOf('{'));
-                console.log(url);
+                //console.log(url);
 
                 var parameters = {
                     'access_token': Cookies.get('access_token'),
@@ -121,11 +121,11 @@
                     parameters['last_sha'] = page;
                 }
 
-                console.log('page ' + page);
+                //console.log('page ' + page);
                 $.get(url, parameters, function (res) {
 
                     //console.log(allRepos[i]);
-                    console.log(res);
+                    //console.log(res);
 
                     if (res.length === 0 || (res.length === 1 && page === res[0].sha)) {
                         i++;
@@ -137,7 +137,7 @@
                             if ((res[k].author !== null && res[k].author.login === user.login)) {
 
                                 if (res[k].commit.author.date.toString() > startDate.toString()) {
-                                    console.log(res[k].commit.author.date);
+                                    //console.log(res[k].commit.author.date);
                                     total++;
                                 }
 
@@ -153,35 +153,67 @@
                 }, 'json');
             } else {
 
-                $('#currentRepo').html('');
+                gatherIssues(0);
 
-                for (var k = 0; k < allResults.length; k++) {
-                    for (var j = 0; j < allResults[k].days.length; j++) {
-                        if (allResults[k].days[j] > maxCommit) {
-                            maxCommit = allResults[k].days[j];
-                        }
-                    }
-                }
-
-                $.get('github/image.php', {
-                    'reposAmount': allRepos.length,
-                    'maxCommit': maxCommit,
-                    'total': total
-                }, function (image) {
-
-                    $('#generate').removeClass('disabled');
-                    $('#octal').css({'display': 'none'});
-                    $('#share').css({'display': 'inline-block'});
-                    $('#download').css({'display': 'inline-block'});
-
-                    var finalResult = $('#finalResult');
-                    finalResult.attr('src', image);
-                    finalResult.css({'display': 'block'});
-
-                    //console.log("allResults");
-                    //console.log(allResults);
-                });
             }
+        }
+
+        function gatherIssues(page) {
+            $.get('github/request.php', {'type': 'issues'}, function (res) {
+                $.get(res.url, {
+                    'access_token': Cookies.get('access_token'),
+                    'since': startDate,
+                    'filter': 'created',
+                    'state': 'all',
+                    'per_page': 100,
+                    'page': page
+                }, function (res) {
+
+                    console.log(res);
+                    if (res.length === 0) {
+
+                        $('#currentRepo').html('');
+
+                        for (var k = 0; k < allResults.length; k++) {
+                            for (var j = 0; j < allResults[k].days.length; j++) {
+                                if (allResults[k].days[j] > maxCommit) {
+                                    maxCommit = allResults[k].days[j];
+                                }
+                            }
+                        }
+
+                        $.get('github/image.php', {
+                            'reposAmount': allRepos.length,
+                            'maxCommit': maxCommit,
+                            'total': total
+                        }, function (image) {
+
+                            $('#generate').removeClass('disabled');
+                            $('#octal').css({'display': 'none'});
+                            $('#share').css({'display': 'inline-block'});
+                            $('#download').css({'display': 'inline-block'});
+
+                            var finalResult = $('#finalResult');
+                            finalResult.attr('src', image);
+                            finalResult.css({'display': 'block'});
+
+                            //console.log("allResults");
+                            //console.log(allResults);
+                        });
+                    } else {
+
+                        for (var k = 0; k < res.length; k++) {
+                            if (res[k].updated_at.toString() > startDate.toString()) {
+                                total++;
+                            }
+                        }
+
+                        gatherIssues(++page);
+                    }
+
+
+                }, 'json');
+            }, 'json');
         }
 
     };

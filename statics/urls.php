@@ -20,3 +20,5 @@ $authorize_url .= "&scope=user,public_repo,repo";
 $repos = $base . "/user/repos";
 
 $user = $base . "/user";
+
+$issues = $base . "/user/issues";
