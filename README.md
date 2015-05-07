@@ -47,13 +47,13 @@ So:
 
 - default branch ✓
 - gh-pages branch
-- open an issue
-- pull request
+- open an issue ✓
+- pull request ✓
 
-## Limits
+## Limitations
 
-From [Github docs](https://developer.github.com/v3/#rate-limiting), we have 5,000 requests per hour
-
+- From [Github docs](https://developer.github.com/v3/#rate-limiting), we have 5,000 requests per hour
+- The original GitHub contributions calendar shows a commit even if it's squashed via <i>git rebase</i>. And currently this kind of history is not available on their current API.
 
 ## Autoload
 
