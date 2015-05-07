@@ -73,7 +73,7 @@ $textbox->setTextAlign('left', 'top');
 // summary text
 $textbox->setFontSize(17);
 $textbox->setBox(10, $divisor_height_offset - 30, 400, 0);
-$textbox->draw("Summary of Pull Requests, issues opened, and commits.");
+$textbox->draw("Summary of Pull Requests, Issues opened, and Commits.");
 
 // graph subtitle
 $textbox->setBox($width - 220, $divisor_height_offset - 30, 400, 0);
@@ -89,6 +89,7 @@ imagefilledrectangle($im, $stepback - 120, $divisor_height_offset - 30, $stepbac
 imagefilledrectangle($im, $stepback - 95, $divisor_height_offset - 30, $stepback - 75, $divisor_height_offset - 10, $scale3);
 imagefilledrectangle($im, $stepback - 70, $divisor_height_offset - 30, $stepback - 50, $divisor_height_offset - 10, $scale4);
 
+
 // squares
 $initial_square_x = $contributions_header_height + 10;
 $initial_square_y = $contributions_header_height + 40;
@@ -103,13 +104,25 @@ $days = floor($diff / (60 * 60 * 24));
 
 $textbox->setFontColor($gdLighterGrey);
 
-$maxCommit = $_GET["maxCommit"];
-$scale1Range = $maxCommit / 5;
-$scale2Range = $scale1Range * 2;
-$scale3Range = $scale1Range * 3;
-$scale4Range = $scale1Range * 4;
+$maxCommit = $_POST["maxCommit"];
+$scale1Range = 10;
+$scale2Range = 15;
+$scale3Range = 20;
+
+$textbox->setFontSize(12);
+$textbox->setBox($stepback - 164, $divisor_height_offset - 45, 400, 0);
+$textbox->draw("0");
+$textbox->setBox($stepback - 145, $divisor_height_offset - 45, 400, 0);
+$textbox->draw("<" . $scale1Range);
+$textbox->setBox($stepback - 120, $divisor_height_offset - 45, 400, 0);
+$textbox->draw("<" . $scale2Range);
+$textbox->setBox($stepback - 97, $divisor_height_offset - 45, 400, 0);
+$textbox->draw("<" . $scale3Range);
+$textbox->setBox($stepback - 71, $divisor_height_offset - 45, 400, 0);
+$textbox->draw("≥" . $scale3Range);
 
 // We build backwards because we count from now to one year before
+$datesArray = $_POST['datesArray'];
 for ($i = 52; $i >= 0; $i--) {
     for ($j = 6; $j >= 0; $j--) {
 
@@ -125,6 +138,21 @@ for ($i = 52; $i >= 0; $i--) {
             $textbox->draw(date("M", $analyzedDate));
         }
 
+        $color = 0;
+        $analyzedDateString = date("Y-m-d", $analyzedDate);
+        if (array_key_exists($analyzedDateString, $datesArray)) {
+            $analyzedDateString = $datesArray[$analyzedDateString];
+            if ($analyzedDateString > 1 && $analyzedDateString < $scale1Range) {
+                $color = 1;
+            } else if ($analyzedDateString >= $scale1Range && $analyzedDateString < $scale2Range) {
+                $color = 2;
+            } else if ($analyzedDateString >= $scale2Range && $analyzedDateString < $scale3Range) {
+                $color = 3;
+            } else if ($analyzedDateString >= $scale3Range) {
+                $color = 4;
+            }
+        }
+
         // squares
         if (($i < 52 || $j <= $dayOfWeek) && $days >= 0) {
             imagefilledrectangle(
@@ -133,7 +161,7 @@ for ($i = 52; $i >= 0; $i--) {
                 $initial_square_y + ($fixed_dimensions + $fixed_offset) * $j,
                 $initial_square_x + ($fixed_dimensions + $fixed_offset) * $i + $fixed_dimensions,
                 $initial_square_y + ($fixed_dimensions + $fixed_offset) * $j + $fixed_dimensions,
-                $colors[rand(0, 4)]
+                $colors[$color]
             );
             $days--;
         }
@@ -194,12 +222,12 @@ $textbox->setFontFace($font);
 $textbox->setFontColor($gdBlack);
 $textbox->setTextAlign('center', 'center');
 
-$number = $_GET["total"];
+$number = $_POST["total"];
 $textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
 $textbox->draw(number_format($number));
 
 $longest_streak = 16;
-$textbox->setBox($divisor_width_offset  * 4, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
 $textbox->draw($longest_streak);
 
 $longest_streak = 16;
@@ -211,7 +239,7 @@ $textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 85, $divi
 $textbox->draw("total");
 
 $longest_streak = 16;
-$textbox->setBox($divisor_width_offset  * 4, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
 $textbox->draw("days");
 
 $longest_streak = 16;

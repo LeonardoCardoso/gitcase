@@ -8,12 +8,14 @@
 
         var allRepos = [];
         var allResults = [];
+        var datesArray = {};
         var total = 0;
         var maxCommit = 0;
         var page = 1;
         var currentRepoNumber = 0;
         var itemsPerPage = 100;
         var startDate = new Date();
+
 
         var defaults = {
             action: ''
@@ -47,17 +49,13 @@
 
                     allRepos = [];
                     allResults = [];
+                    datesArray = {};
                     total = 0;
                     maxCommit = 0;
                     page = 1;
                     currentRepoNumber = 0;
 
-                    startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 1);
-                    startDate = startDate.toISOString();
-                    if (startDate.indexOf(".") > -1) {
-                        startDate = startDate.substring(0, startDate.indexOf(".")) + "Z";
-                    }
+                    buildDatesArray();
 
                     $.get('github/request.php', {'type': 'user'}, function (res) {
 
@@ -65,7 +63,7 @@
 
                             var totalRepos = parseInt(user.public_repos) + parseInt(user.total_private_repos);
 
-                            getPage($(this), user, res, totalRepos, allRepos);
+                            getRepositoriesByPage($(this), user, res, totalRepos, allRepos);
 
                         }, 'json');
 
@@ -76,7 +74,33 @@
 
         }
 
-        function getPage(btn, user, res, totalAmount, allRepos) {
+        function buildDatesArray() {
+            var now = new Date();
+            startDate = new Date();
+            startDate.setFullYear(startDate.getFullYear() - 1);
+            startDate.setDate(startDate.getDate() - 1);
+            var nowString = removeMS(now);
+            var startDateString = removeMS(startDate);
+
+            while (nowString !== startDateString) {
+                datesArray[nowString.substring(0, nowString.indexOf('T'))] = 0;
+                var backInTime = now
+                backInTime.setDate(backInTime.getDate() - 1);
+                nowString = removeMS(backInTime);
+            }
+
+            startDate = startDate.toISOString();
+        }
+
+        function removeMS(date) {
+            date = date.toISOString();
+            if (date.indexOf(".") > -1) {
+                date = date.substring(0, date.indexOf(".")) + "Z";
+            }
+            return date;
+        }
+
+        function getRepositoriesByPage(btn, user, res, totalAmount, allRepos) {
             $.get(res.repos_url, {
                 'access_token': Cookies.get('access_token'),
                 'page': page,
@@ -89,12 +113,12 @@
                 }
 
                 if (currentRepoNumber < totalAmount && totalAmount > page * itemsPerPage) {
-
+                    // pagination
                     page++;
-                    getPage(btn, user, res, totalAmount, allRepos);
+                    getRepositoriesByPage(btn, user, res, totalAmount, allRepos);
 
                 } else {
-
+                    // repository list reaches its end
                     gatherStatistics(allRepos, user, 0, allResults, null);
 
                 }
@@ -107,9 +131,7 @@
 
                 $('#currentRepo').html(allRepos[i].name);
 
-
                 var url = allRepos[i].commits_url.substring(0, allRepos[i].commits_url.indexOf('{'));
-                //console.log(url);
 
                 var parameters = {
                     'access_token': Cookies.get('access_token'),
@@ -121,13 +143,10 @@
                     parameters['last_sha'] = page;
                 }
 
-                //console.log('page ' + page);
                 $.get(url, parameters, function (res) {
 
-                    //console.log(allRepos[i]);
-                    //console.log(res);
-
                     if (res.length === 0 || (res.length === 1 && page === res[0].sha)) {
+                        // stop pagination
                         i++;
                         lastCommit = null;
                     } else {
@@ -137,7 +156,7 @@
                             if ((res[k].author !== null && res[k].author.login === user.login)) {
 
                                 if (res[k].commit.author.date.toString() > startDate.toString()) {
-                                    //console.log(res[k].commit.author.date);
+                                    updateDateString(res[k].commit.author.date.toString());
                                     total++;
                                 }
 
@@ -158,6 +177,15 @@
             }
         }
 
+        function updateDateString(dateString) {
+            dateString = dateString.substring(0, dateString.indexOf('T'));
+            datesArray[dateString]++;
+
+            if(maxCommit < datesArray[dateString]){
+                maxCommit = datesArray[dateString];
+            }
+        }
+
         function gatherIssues(page) {
             $.get('github/request.php', {'type': 'issues'}, function (res) {
                 $.get(res.url, {
@@ -169,23 +197,15 @@
                     'page': page
                 }, function (res) {
 
-                    console.log(res);
+                    $('#currentRepo').html('');
+
                     if (res.length === 0) {
 
-                        $('#currentRepo').html('');
-
-                        for (var k = 0; k < allResults.length; k++) {
-                            for (var j = 0; j < allResults[k].days.length; j++) {
-                                if (allResults[k].days[j] > maxCommit) {
-                                    maxCommit = allResults[k].days[j];
-                                }
-                            }
-                        }
-
-                        $.get('github/image.php', {
+                        $.post('github/image.php', {
                             'reposAmount': allRepos.length,
                             'maxCommit': maxCommit,
-                            'total': total
+                            'total': total,
+                            'datesArray': datesArray
                         }, function (image) {
 
                             $('#generate').removeClass('disabled');
@@ -197,13 +217,12 @@
                             finalResult.attr('src', image);
                             finalResult.css({'display': 'block'});
 
-                            //console.log("allResults");
-                            //console.log(allResults);
                         });
                     } else {
 
                         for (var k = 0; k < res.length; k++) {
                             if (res[k].updated_at.toString() > startDate.toString()) {
+                                updateDateString(res[k].updated_at.toString());
                                 total++;
                             }
                         }
