@@ -103,6 +103,12 @@ $days = floor($diff / (60 * 60 * 24));
 
 $textbox->setFontColor($gdLighterGrey);
 
+$maxCommit = $_GET["maxCommit"];
+$scale1Range = $maxCommit / 5;
+$scale2Range = $scale1Range * 2;
+$scale3Range = $scale1Range * 3;
+$scale4Range = $scale1Range * 4;
+
 // We build backwards because we count from now to one year before
 for ($i = 52; $i >= 0; $i--) {
     for ($j = 6; $j >= 0; $j--) {
@@ -188,7 +194,7 @@ $textbox->setFontFace($font);
 $textbox->setFontColor($gdBlack);
 $textbox->setTextAlign('center', 'center');
 
-$number = 122222;
+$number = $_GET["total"];
 $textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
 $textbox->draw(number_format($number));
 

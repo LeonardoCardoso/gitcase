@@ -10,6 +10,7 @@ include("statics/cookies.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
           rel="stylesheet" type="text/css">
     <link href="http://leocardz.com/util/assets/images/favicon.png" rel="shortcut icon"
@@ -106,6 +107,18 @@ if (!isset($_COOKIE[$access_token])) {
 <?php
 }
 ?>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center" id="currentRepo">
+                    <br>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
 
 <img id="finalResult" class="center img-responsive">
 <div class="section">

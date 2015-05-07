@@ -37,6 +37,24 @@ Create a file in the folder statics named credentials.php and add the following:
 
 Make sure the library php5-curl is installed and enabled on the server whether local or at webspace. 
 
+
+## Statistics
+
+From [Github docs](https://help.github.com/articles/viewing-contributions-on-your-profile-page/):
+
+Whenever you commit to a project's default branch (or the gh-pages branch), open an issue, or propose a Pull Request, we count that as a contribution.
+So:
+
+- default branch ✓
+- gh-pages branch
+- open an issue
+- pull request
+
+## Limits
+
+From [Github docs](https://developer.github.com/v3/#rate-limiting), we have 5,000 requests per hour
+
+
 ## Autoload
 
 To install dependencies via [Composer](http://getcomposer.org), do the following:
