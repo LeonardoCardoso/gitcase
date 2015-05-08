@@ -6,6 +6,8 @@
  * Time: 18:21
  */
 
+date_default_timezone_set("UTC");
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $fontpath = realpath('../css/fonts/');
@@ -58,29 +60,29 @@ imagefilledrectangle($im, 1, 1, $width - 2, $contributions_header_height, $light
 imageline($im, 0, $contributions_header_height, $width, $contributions_header_height, $darker_grey);
 
 // header texts
-$textbox = new Box($im);
-$textbox->setFontSize(20);
-$textbox->setFontFace($font);
-$textbox->setFontColor($gdBlack);
-$textbox->setBox(15, 5, 105, 100);
-$textbox->setTextAlign('right', 'top');
-$textbox->draw("Contributions");
+$textDrawn = new Box($im);
+$textDrawn->setFontSize(20);
+$textDrawn->setFontFace($font);
+$textDrawn->setFontColor($gdBlack);
+$textDrawn->setBox(15, 5, 105, 100);
+$textDrawn->setTextAlign('right', 'top');
+$textDrawn->draw("Contributions");
 
-$textbox->setBox($width - 120, 5, 105, 100);
-$textbox->draw("gitcase.leocardz.com");
+$textDrawn->setBox($width - 120, 5, 105, 100);
+$textDrawn->draw("gitcase.leocardz.com");
 
-$textbox->setTextAlign('left', 'top');
+$textDrawn->setTextAlign('left', 'top');
 // summary text
-$textbox->setFontSize(17);
-$textbox->setBox(10, $divisor_height_offset - 30, 400, 0);
-$textbox->draw("Summary of Pull Requests, Issues opened, and Commits.");
+$textDrawn->setFontSize(17);
+$textDrawn->setBox(10, $divisor_height_offset - 30, 400, 0);
+$textDrawn->draw("Summary of Pull Requests, Issues opened, and Commits.");
 
 // graph subtitle
-$textbox->setBox($width - 220, $divisor_height_offset - 30, 400, 0);
-$textbox->draw("Less");
+$textDrawn->setBox($width - 220, $divisor_height_offset - 30, 400, 0);
+$textDrawn->draw("Less");
 
-$textbox->setBox($width - 50, $divisor_height_offset - 30, 400, 0);
-$textbox->draw("More");
+$textDrawn->setBox($width - 50, $divisor_height_offset - 30, 400, 0);
+$textDrawn->draw("More");
 
 $stepback = $width - 12;
 imagefilledrectangle($im, $stepback - 170, $divisor_height_offset - 30, $stepback - 150, $divisor_height_offset - 10, $scale0);
@@ -102,24 +104,24 @@ $dateOneYearAgo = strtotime($dateToday . ' -1 year');
 $diff = abs(strtotime($dateToday) - $dateOneYearAgo);
 $days = floor($diff / (60 * 60 * 24));
 
-$textbox->setFontColor($gdLighterGrey);
+$textDrawn->setFontColor($gdLighterGrey);
 
-$maxCommit = $_POST["maxCommit"];
+$maxCommitAmmount = $_POST["maxCommitAmmount"];
 $scale1Range = 10;
 $scale2Range = 15;
 $scale3Range = 20;
 
-$textbox->setFontSize(12);
-$textbox->setBox($stepback - 164, $divisor_height_offset - 45, 400, 0);
-$textbox->draw("0");
-$textbox->setBox($stepback - 145, $divisor_height_offset - 45, 400, 0);
-$textbox->draw("<" . $scale1Range);
-$textbox->setBox($stepback - 120, $divisor_height_offset - 45, 400, 0);
-$textbox->draw("<" . $scale2Range);
-$textbox->setBox($stepback - 97, $divisor_height_offset - 45, 400, 0);
-$textbox->draw("<" . $scale3Range);
-$textbox->setBox($stepback - 71, $divisor_height_offset - 45, 400, 0);
-$textbox->draw("≥" . $scale3Range);
+$textDrawn->setFontSize(12);
+$textDrawn->setBox($stepback - 164, $divisor_height_offset - 45, 400, 0);
+$textDrawn->draw("0");
+$textDrawn->setBox($stepback - 145, $divisor_height_offset - 45, 400, 0);
+$textDrawn->draw("<" . $scale1Range);
+$textDrawn->setBox($stepback - 120, $divisor_height_offset - 45, 400, 0);
+$textDrawn->draw("<" . $scale2Range);
+$textDrawn->setBox($stepback - 97, $divisor_height_offset - 45, 400, 0);
+$textDrawn->draw("<" . $scale3Range);
+$textDrawn->setBox($stepback - 71, $divisor_height_offset - 45, 400, 0);
+$textDrawn->draw("≥" . $scale3Range);
 
 // We build backwards because we count from now to one year before
 $datesArray = $_POST['datesArray'];
@@ -129,26 +131,26 @@ for ($i = 52; $i >= 0; $i--) {
         // months
         $analyzedDate = strtotime(date("Y-m-d", $dateOneYearAgo) . ' +' . $days . ' days');
         if ($j == 0 && date("d", $analyzedDate) < 8) {
-            $textbox->setBox(
+            $textDrawn->setBox(
                 $initial_square_x + ($fixed_dimensions + $fixed_offset) * $i,
                 $initial_square_y - 22,
                 400,
                 0
             );
-            $textbox->draw(date("M", $analyzedDate));
+            $textDrawn->draw(date("M", $analyzedDate));
         }
 
         $color = 0;
         $analyzedDateString = date("Y-m-d", $analyzedDate);
         if (array_key_exists($analyzedDateString, $datesArray)) {
-            $analyzedDateString = $datesArray[$analyzedDateString];
-            if ($analyzedDateString > 1 && $analyzedDateString < $scale1Range) {
+            $currentDayCommitsAmount = $datesArray[$analyzedDateString];
+            if ($currentDayCommitsAmount > 1 && $currentDayCommitsAmount < $scale1Range) {
                 $color = 1;
-            } else if ($analyzedDateString >= $scale1Range && $analyzedDateString < $scale2Range) {
+            } else if ($currentDayCommitsAmount >= $scale1Range && $currentDayCommitsAmount < $scale2Range) {
                 $color = 2;
-            } else if ($analyzedDateString >= $scale2Range && $analyzedDateString < $scale3Range) {
+            } else if ($currentDayCommitsAmount >= $scale2Range && $currentDayCommitsAmount < $scale3Range) {
                 $color = 3;
-            } else if ($analyzedDateString >= $scale3Range) {
+            } else if ($currentDayCommitsAmount >= $scale3Range) {
                 $color = 4;
             }
         }
@@ -169,82 +171,116 @@ for ($i = 52; $i >= 0; $i--) {
 }
 
 // weekdays on graph
-$textbox->setFontColor($gdDarkerGrey);
+$textDrawn->setFontColor($gdDarkerGrey);
 $offset = 1;
-$textbox->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 1 - $offset, 400, 0);
-$textbox->draw("M");
-$textbox->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 3 - $offset, 400, 0);
-$textbox->draw("W");
-$textbox->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 5 - $offset, 400, 0);
-$textbox->draw("F");
-$textbox->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 1 - $offset, 400, 0);
-$textbox->draw("M");
-$textbox->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 3 - $offset, 400, 0);
-$textbox->draw("W");
-$textbox->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 5 - $offset, 400, 0);
-$textbox->draw("F");
+$textDrawn->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 1 - $offset, 400, 0);
+$textDrawn->draw("M");
+$textDrawn->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 3 - $offset, 400, 0);
+$textDrawn->draw("W");
+$textDrawn->setBox(22, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 5 - $offset, 400, 0);
+$textDrawn->draw("F");
+$textDrawn->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 1 - $offset, 400, 0);
+$textDrawn->draw("M");
+$textDrawn->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 3 - $offset, 400, 0);
+$textDrawn->draw("W");
+$textDrawn->setBox($width - 44, $initial_square_y + ($fixed_dimensions + $fixed_offset) * 5 - $offset, 400, 0);
+$textDrawn->draw("F");
 
 
 // bottom box texts
-$textbox = new Box($im);
-$textbox->setFontSize(20);
-$textbox->setFontFace($font);
-$textbox->setFontColor($gdDarkerGrey);
-$textbox->setTextAlign('center', 'top');
+$textDrawn = new Box($im);
+$textDrawn->setFontSize(20);
+$textDrawn->setFontFace($font);
+$textDrawn->setFontColor($gdDarkerGrey);
+$textDrawn->setTextAlign('center', 'top');
 
-$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset, $divisor_width_offset, 0);
-$textbox->draw("In the last year");
+$textDrawn->setBox($divisor_width_offset, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textDrawn->draw("In the last year");
 
-$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset, $divisor_width_offset, 0);
-$textbox->draw("Longest streak");
+$textDrawn->setBox($divisor_width_offset * 4, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textDrawn->draw("Longest streak");
 
-$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset, $divisor_width_offset, 0);
-$textbox->draw("Current streak");
-
-
-$textbox->setFontSize(15);
-$textbox->setBox(0, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
-$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
-
-$textbox->setBox($divisor_width_offset * 3, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
-// if are in the same year then do not show the year
-$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
-
-$textbox->setBox($divisor_width_offset * 6, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
-// if are in the same year then do not show the year
-$textbox->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
+$textDrawn->setBox($divisor_width_offset * 7, $divisor_height_texts_offset, $divisor_width_offset, 0);
+$textDrawn->draw("Current streak");
 
 
 // streaks
-$textbox = new Box($im);
-$textbox->setFontSize(50);
-$textbox->setFontFace($font);
-$textbox->setFontColor($gdBlack);
-$textbox->setTextAlign('center', 'center');
+$textDrawn->setFontSize(15);
+$textDrawn->setBox(0, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+$textDrawn->draw(date("M d, Y") . " - " . date("M d, Y", $dateOneYearAgo));
+
+$longestStreakStart = "";
+$longestStreakEnd = "";
+$currentStreakStart = "";
+$currentStreakEnd = "";
+$longestStreakAmount = 0;
+$currentStreakAmount = 0;
+ksort($datesArray);
+foreach ($datesArray as $day => $commits) {
+
+    if ($longestStreakStart === "") $longestStreakStart = $day;
+    if ($longestStreakEnd === "") $longestStreakEnd = $day;
+
+    if ($currentStreakStart === "") $currentStreakStart = $day;
+    if ($currentStreakEnd === "") $currentStreakEnd = $day;
+
+    if ($commits != 0) {
+
+        $currentStreakEnd = $day;
+
+        $currentDiff = floor(abs(strtotime($currentStreakEnd) - strtotime($currentStreakStart)) / (60 * 60 * 24));
+        $longestDiff = floor(abs(strtotime($longestStreakEnd) - strtotime($longestStreakStart)) / (60 * 60 * 24));
+        if ($currentDiff > $longestDiff) {
+            $longestStreakStart = $currentStreakStart;
+            $longestStreakEnd = $currentStreakEnd;
+            $longestStreakAmount = $currentDiff;
+        }
+
+        $currentStreakAmount = $currentDiff;
+
+    } else {
+
+        $currentStreakStart = $day;
+        $currentStreakEnd = $day;
+        $currentStreakAmount = 0;
+
+    }
+
+}
+
+$textDrawn->setBox($divisor_width_offset * 3, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+// if are in the same year then do not show the year
+$textDrawn->draw(date("M d, Y", strtotime($longestStreakStart)) . " - " . date("M d, Y", strtotime($longestStreakEnd)));
+
+$textDrawn->setBox($divisor_width_offset * 6, $divisor_height_texts_offset + 100, $divisor_width_offset * 3, 0);
+// if are in the same year then do not show the year
+$textDrawn->draw(date("M d, Y", strtotime($currentStreakStart)) . " - " . date("M d, Y", strtotime($currentStreakEnd)));
+
+$textDrawn = new Box($im);
+$textDrawn->setFontSize(50);
+$textDrawn->setFontFace($font);
+$textDrawn->setFontColor($gdBlack);
+$textDrawn->setTextAlign('center', 'center');
 
 $number = $_POST["total"];
-$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
-$textbox->draw(number_format($number));
+$textDrawn->setBox($divisor_width_offset, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textDrawn->draw(number_format($number));
 
-$longest_streak = 16;
-$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
-$textbox->draw($longest_streak);
+$textDrawn->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textDrawn->draw($longestStreakAmount);
 
-$longest_streak = 16;
-$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
-$textbox->draw($longest_streak);
+$textDrawn->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 50, $divisor_width_offset, 0);
+$textDrawn->draw($currentStreakAmount);
 
-$textbox->setFontSize(20);
-$textbox->setBox($divisor_width_offset, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
-$textbox->draw("total");
+$textDrawn->setFontSize(20);
+$textDrawn->setBox($divisor_width_offset, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textDrawn->draw("total");
 
-$longest_streak = 16;
-$textbox->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
-$textbox->draw("days");
+$textDrawn->setBox($divisor_width_offset * 4, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textDrawn->draw("days");
 
-$longest_streak = 16;
-$textbox->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
-$textbox->draw("days");
+$textDrawn->setBox($divisor_width_offset * 7, $divisor_height_texts_offset + 85, $divisor_width_offset, 0);
+$textDrawn->draw("days");
 
 
 ob_start();

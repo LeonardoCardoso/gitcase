@@ -13,7 +13,14 @@ list(, $data) = explode(',', $data);
 $data = base64_decode($data);
 
 $name = uniqid(time());
-$file = 'images/' . $name . '.png';
+
+$file = "images/";
+if (file_exists($file) === false) {
+    mkdir($file);
+    chmod($file, 0777);
+}
+
+$file .= $name . '.png';
 $success = file_put_contents($file, $data);
 chmod($file, 0777);
 

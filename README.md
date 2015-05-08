@@ -1,6 +1,4 @@
-# GitCase (Under Development)
-
-[![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
+# GitCase
 
 Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
 
@@ -35,7 +33,18 @@ Create a file in the folder statics named credentials.php and add the following:
     $callbackURL = CALLBACK URL YOU REGISTERED YOUR APPLICATION ON GITHUB;
 
 
-Make sure the library php5-curl is installed and enabled on the server whether local or at webspace. 
+Make sure the library <b>php5-curl</b> and <b>php5-gd</b> are installed and enabled on the server, either locally or remotely. 
+
+- Linux
+```bash
+$ sudo apt-get install php5-gd php5-curl
+$ sudo service apache2 restart
+```
+- Mac (via [macports](https://www.macports.org/))
+```bash
+$ sudo port install php5-curl php5-gd 
+$ sudo apachectl restart
+```
 
 
 ## Statistics
