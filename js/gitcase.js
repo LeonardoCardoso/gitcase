@@ -10,12 +10,11 @@
         var allResults = [];
         var datesArray = {};
         var total = 0;
-        var maxCommit = 0;
+        var maxCommitAmmount = 0;
         var page = 1;
         var currentRepoNumber = 0;
         var itemsPerPage = 100;
         var startDate = new Date();
-
 
         var defaults = {
             action: ''
@@ -49,12 +48,12 @@
 
                     allRepos = [];
                     allResults = [];
-                    datesArray = {};
                     total = 0;
-                    maxCommit = 0;
+                    maxCommitAmmount = 0;
                     page = 1;
                     currentRepoNumber = 0;
 
+                    datesArray = {};
                     buildDatesArray();
 
                     $.get('github/request.php', {'type': 'user'}, function (res) {
@@ -83,7 +82,7 @@
             var startDateString = removeMS(startDate);
 
             while (nowString !== startDateString) {
-                datesArray[nowString.substring(0, nowString.indexOf('T'))] = 0;
+                datesArray[nowString] = 0;
                 var backInTime = now
                 backInTime.setDate(backInTime.getDate() - 1);
                 nowString = removeMS(backInTime);
@@ -94,6 +93,7 @@
 
         function removeMS(date) {
             date = date.toISOString();
+            date = date.substring(0, date.indexOf('T'));
             if (date.indexOf(".") > -1) {
                 date = date.substring(0, date.indexOf(".")) + "Z";
             }
@@ -172,7 +172,7 @@
                 }, 'json');
             } else {
 
-                gatherIssues(0);
+                gatherIssues(1);
 
             }
         }
@@ -181,12 +181,15 @@
             dateString = dateString.substring(0, dateString.indexOf('T'));
             datesArray[dateString]++;
 
-            if(maxCommit < datesArray[dateString]){
-                maxCommit = datesArray[dateString];
+            if (maxCommitAmmount < datesArray[dateString]) {
+                maxCommitAmmount = datesArray[dateString];
             }
         }
 
         function gatherIssues(page) {
+
+            $('#currentRepo').html('Retrieving Issues and Pull Requests...');
+
             $.get('github/request.php', {'type': 'issues'}, function (res) {
                 $.get(res.url, {
                     'access_token': Cookies.get('access_token'),
@@ -203,7 +206,7 @@
 
                         $.post('github/image.php', {
                             'reposAmount': allRepos.length,
-                            'maxCommit': maxCommit,
+                            'maxCommitAmmount': maxCommitAmmount,
                             'total': total,
                             'datesArray': datesArray
                         }, function (image) {
@@ -221,10 +224,11 @@
                     } else {
 
                         for (var k = 0; k < res.length; k++) {
-                            if (res[k].updated_at.toString() > startDate.toString()) {
-                                updateDateString(res[k].updated_at.toString());
+                            if (res[k].created_at.toString() > startDate.toString()) {
+                                updateDateString(res[k].created_at.toString());
                                 total++;
                             }
+
                         }
 
                         gatherIssues(++page);

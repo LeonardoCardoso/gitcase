@@ -1,6 +1,4 @@
-# GitCase (Under Development)
-
-[![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
+# GitCase
 
 Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
 
@@ -58,6 +56,10 @@ So:
 ## Autoload
 
 To install dependencies via [Composer](http://getcomposer.org), do the following:
+
+```bash
+$ sudo apt-get install php5-gd
+```
 
 ```bash
 $ curl -s http://getcomposer.org/installer | php

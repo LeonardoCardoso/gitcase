@@ -85,11 +85,7 @@ if (!isset($_COOKIE[$access_token])) {
             <div class="row">
                 <div class="col-md-12">
                     <a class="btn btn-lg btn-primary" id="download">
-                        download&nbsp;<i class="fa hub fa-fw fa-download"><br></i>
-                    </a>
-
-                    <a class="btn btn-lg btn-primary" id="share">
-                        share&nbsp;<i class="fa hub fa-fw fa-bullhorn"><br></i>
+                        download and share&nbsp;<i class="fa hub fa-fw fa-download"><br></i>
                     </a>
 
                     <a class="btn btn-lg btn-primary" id="generate">
