@@ -21,4 +21,4 @@ $repos = $base . "/user/repos";
 
 $user = $base . "/user";
 
-$issues = $base . "/user/issues";
+$issues = $base . "/issues";
