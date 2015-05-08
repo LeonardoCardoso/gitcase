@@ -106,7 +106,7 @@ $days = floor($diff / (60 * 60 * 24));
 
 $textDrawn->setFontColor($gdLighterGrey);
 
-$maxCommit = $_POST["maxCommit"];
+$maxCommitAmmount = $_POST["maxCommitAmmount"];
 $scale1Range = 10;
 $scale2Range = 15;
 $scale3Range = 20;
