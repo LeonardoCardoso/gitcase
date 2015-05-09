@@ -1,5 +1,7 @@
 # GitCase
 
+[![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
+
 Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
 
 Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that issue we've created this.
@@ -52,12 +54,14 @@ $ sudo apachectl restart
 From [Github docs](https://help.github.com/articles/viewing-contributions-on-your-profile-page/):
 
 Whenever you commit to a project's default branch (or the gh-pages branch), open an issue, or propose a Pull Request, we count that as a contribution.
-So:
+But here we added the contribution in other branches.
 
 - default branch ✓
+- other branches
 - gh-pages branch
 - open an issue ✓
 - pull request ✓
+
 
 ## Limitations
 
