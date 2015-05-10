@@ -125,6 +125,7 @@ $textDrawn->draw("≥" . $scale3Range);
 
 // We build backwards because we count from now to one year before
 $datesArray = $_POST['datesArray'];
+$datesArray['2015-05-10'] = 1;
 for ($i = 52; $i >= 0; $i--) {
     for ($j = 6; $j >= 0; $j--) {
 
@@ -144,7 +145,7 @@ for ($i = 52; $i >= 0; $i--) {
         $analyzedDateString = date("Y-m-d", $analyzedDate);
         if (array_key_exists($analyzedDateString, $datesArray)) {
             $currentDayCommitsAmount = $datesArray[$analyzedDateString];
-            if ($currentDayCommitsAmount > 1 && $currentDayCommitsAmount < $scale1Range) {
+            if ($currentDayCommitsAmount > 0 && $currentDayCommitsAmount < $scale1Range) {
                 $color = 1;
             } else if ($currentDayCommitsAmount >= $scale1Range && $currentDayCommitsAmount < $scale2Range) {
                 $color = 2;
