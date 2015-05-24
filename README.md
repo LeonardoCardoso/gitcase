@@ -58,6 +58,7 @@ But here we added the contribution in other branches.
 
 - default branch ✓
 - other branches
+- gists
 - gh-pages branch
 - open an issue ✓
 - pull request ✓
