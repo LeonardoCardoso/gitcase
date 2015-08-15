@@ -1,5 +1,7 @@
 # GitCase
 
+[![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
+
 Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
 
 Sometimes you work only with private repos in GitHub but your public profile is so empty. To solve that issue we've created this.
