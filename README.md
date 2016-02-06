@@ -12,11 +12,11 @@ It's PHPs based project shares the information of all contributions (private and
 
 ## As seen publicly
 
-![Public](https://dl.dropbox.com/s/mzv3datwk70pjrl/gitshare_public.png)
+![Public](http://i.imgur.com/wKe6Swi.png)
 
 ## As seen privately
 
-![Complete](https://dl.dropbox.com/s/7ven0cqbl5btxdh/gitshare.png)
+![Complete](http://i.imgur.com/KP009wz.png)
 
 ## Important
 

@@ -42,7 +42,7 @@ include("statics/cookies.php");
         <div class="row">
             <div class="col-md-12">
                 <a href="http://leocardz.com/" target="_blank">
-                    <img src="http://leocardz.com/util/assets/images/leocardz.png" class="center-block img-responsive">
+                    <img src="http://leocardz.com/utils/assets/img/leocardz-small.png" class="center-block img-responsive">
                 </a>
             </div>
         </div>
