@@ -83,6 +83,9 @@ $ curl -s http://getcomposer.org/installer | php
 $ php composer.phar install
 ```
 
+## Contact
+Contact me either by Twitter [@leocardz](https://twitter.com/leocardz) or emailing me to [contact@leocardz.com](mailto:contact@leocardz.com).
+
 
 ## License
 
