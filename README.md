@@ -1,7 +1,8 @@
-# GitCase
+# GitCase (no longer maintained)
 
-## Discontinued
-**Read more https://github.com/blog/2173-more-contributions-on-your-profile**
+<b>
+Disclaimer: I will no longer maintain this project because GitHub has made it. Read more @ https://github.com/blog/2173-more-contributions-on-your-profile
+</b>
 
 [![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
 
