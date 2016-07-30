@@ -1,5 +1,8 @@
 # GitCase
 
+## Discontinued
+**Read more https://github.com/blog/2173-more-contributions-on-your-profile**
+
 [![Build Status](https://travis-ci.org/LeonardoCardoso/gitcase.svg)](https://travis-ci.org/LeonardoCardoso/gitcase)
 
 Developed by <a href='https://github.com/LeonardoCardoso' target='_blank'>@LeonardoCardoso</a>. 
@@ -21,10 +24,6 @@ It's PHPs based project shares the information of all contributions (private and
 ## Important
 
 This API only shows the info, not the data.
-
-## Live Example
-
-You can found it here http://gitcase.leocardz.com
 
 ## Important
 
